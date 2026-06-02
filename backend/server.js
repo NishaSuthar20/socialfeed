@@ -6,8 +6,12 @@ const path = require('path');
 
 const app = express();
 app.use(cors({
-  origin: ["https://socialfeed-frontend.netlify.app", "http://localhost:5173"],
-  credentials: true
+  origin: [
+    // "http://localhost:5173",
+    "https://socialfeed-frontend.netlify.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -20,7 +24,7 @@ app.use('/api/posts', require('./routes/posts'));
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('MongoDB Connected ✅');
-    app.listen(process.env.PORT, () => 
+    app.listen(process.env.PORT || 5000, () => 
       console.log(`Server running on port ${process.env.PORT} 🚀`)
     );
   })

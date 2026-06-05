@@ -124,6 +124,51 @@ const PostCard = ({ post, onUpdate, onDelete }) => {
       `}</style>
 
       {/* Full Image Dialog */}
+
+      {/* Full Image Dialog */}
+<Dialog
+  open={imageOpen}
+  onClose={() => setImageOpen(false)}
+  maxWidth="md"
+  fullWidth
+  PaperProps={{
+    sx: {
+      background: "rgba(5,20,35,0.97)",
+      borderRadius: 4,
+      border: "1px solid rgba(123,189,232,0.2)",
+      overflow: "hidden",
+    }
+  }}
+>
+  <DialogContent sx={{ p: 0, position: "relative" }}>
+    <IconButton
+      onClick={() => setImageOpen(false)}
+      sx={{
+        position: "absolute", top: 12, right: 12, zIndex: 10,
+        bgcolor: "rgba(0,0,0,0.6)", color: "white",
+        "&:hover": { bgcolor: "rgba(240,98,146,0.7)" }
+      }}
+    >
+      <CloseIcon />
+    </IconButton>
+    <Box
+      onDoubleClick={() => {
+        setHeartAnim(true);
+        setTimeout(() => setHeartAnim(false), 1000);
+        if (!isLiked) handleLike();
+      }}
+      sx={{ position: "relative", cursor: "zoom-in" }}
+    >
+      {heartAnim && <span className="heart-bounce">❤️</span>}
+      <img
+        src={`${import.meta.env.VITE_API_URL}/uploads/${post.image}`}
+        alt="post"
+        style={{ width: "100%", maxHeight: "85vh", objectFit: "contain", display: "block" }}
+      />
+    </Box>
+  </DialogContent>
+</Dialog>
+
       <Dialog
   open={deleteConfirm}
   onClose={() => setDeleteConfirm(false)}
